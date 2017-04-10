@@ -5,3 +5,6 @@
 *.swp
 test*
 example*
+utilities.nut
+.imptest
+*.out.nut
