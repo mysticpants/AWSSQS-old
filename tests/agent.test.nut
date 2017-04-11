@@ -243,7 +243,7 @@ class AgentTestCase extends ImpTestCase {
             local receipt = messageBody.slice((start + 15), (finish - 1));
             return receipt;
         }
-        
+
         // reception parameters to recieve messages
         local receiveParams = {
             "QueueUrl": AWS_TEST_SQS_URL
