@@ -13,6 +13,7 @@ To add this library to your model, add the following lines to the top of your ag
 
 This class can be used to perform actions with the AWS SQS (Simple Queueing Service)
 
+
 ## Class Methods
 
 ### constructor(region, accessKeyId, secretAccessKey)
@@ -24,6 +25,7 @@ region                 | string         | AWS region (e.g. "us-west-2")
 accessKeyId            | string         | IAM Access Key ID
 secretAccessKey        | string         | IAM Secret Access Key
 
+#### Example
 
 ```squirrel
 const AWS_SQS_ACCESS_KEY_ID = "YOUR_ACCESS_KEY_ID_HERE";
@@ -34,6 +36,8 @@ const AWS_SQS_REGION = "YOUR_REGION_HERE";
 // initialise the class
 sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 ```
+
+
 
 ### DeleteMessage(params, cb)
 Deletes the specified message from the specified queue. You specify the message by using the message's receipt handle and not the MessageId you receive when you send the message.
@@ -51,6 +55,8 @@ Parameter    | Type    |Required | Description
 QueueUrl     | String  | Yes     | The URL of the Amazon SQS queue from which messages are deleted
 ReceiptHandle| String  | Yes     | The receipt handle associated with the message to delete
 
+#### Example
+
 ```squirrel
 // RECEIPT_HANDLE can be found from the response.body in ReceiveMessage
 deleteParams <- {
@@ -62,6 +68,8 @@ sqs.DeleteMessage(deleteParams, function(res) {
 });
 
 ```
+
+
 
 ### DeleteMessageBatch(params, cb)
 Deletes up to ten messages from the specified queue. This is a batch version of DeleteMessage. The result of the action on each message is reported individually in the response.
@@ -87,6 +95,7 @@ Parameter     | Type    | Required | Description             |
 Id            | String  | Yes      | An identifier for this particular receipt handle.
 ReceiptHandle | String  | Yes      | The receipt handle associated with the message to delete
 
+#### Example
 
 ```squirrel
 // delete the message corresponding to id "m1"
@@ -103,6 +112,8 @@ _sqs.DeleteMessageBatch(deleteParams, function(res) {
 }
 
 ```
+
+
 
 ### ReceiveMessage(params, cb)
 Retrieves one or more messages (up to 10), from the specified queue.
@@ -125,6 +136,8 @@ ReceiveRequestAttemptId | String   | No       | This parameter applies only to F
 VisibilityTimeout       | Integer  | No       | The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request
 WaitTimeSeconds         | Integer  | No       | The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds
 
+#### Example
+
 ```squirrel
 local receiptFinder = function(messageBody) {
     local start = messageBody.find("<ReceiptHandle>");
@@ -143,6 +156,8 @@ sqs.ReceiveMessage(receiveParams, function(res) {
 });
 
 ```
+
+
 
 ### SendMessage(params, cb)
 Delivers a message to the specified queue.
@@ -164,6 +179,8 @@ MessageBody           | String    | Yes      | The message to send. The maximum 
 MessageDeduplicationId| String    | No       | This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval
 MessageGroupId        | String    | No       | This parameter applies only to FIFO (first-in-first-out) queues.The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order)
 
+#### Example
+
 ```squirrel
 // Send Message
 sendParams <- {
@@ -176,6 +193,8 @@ sqs.SendMessage(sendParams, function(res) {
 });
 
 ```
+
+
 
 ### SendMessageBatch(params, cb)
 Delivers up to ten messages to the specified queue.
@@ -193,6 +212,7 @@ Parameter                        | Type    | Required   |Description
 QueueUrl                         | String  | Yes        | The URL of the Amazon SQS queue from which messages are deleted
 SendMessageBatchRequestEntry.N.X | String | Yes | A list of SendMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
 
+
 #### SendMessageBatchRequestEntry
 
 Parameter                | Type      | Required   | Description
@@ -204,6 +224,7 @@ MessageBody              | String    | Yes        | The message to send. The max
 MessageDeduplicationId   | String    | No         | This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval
 MessageGroupId           | String    | No         | This parameter applies only to FIFO (first-in-first-out) queues.The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order)
 
+#### Example
 
 ```squirrel
 local messageBatchParams = {
