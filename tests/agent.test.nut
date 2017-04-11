@@ -1,4 +1,3 @@
-
 // Please Enter your AWS keys, region and SQS URL
 const AWS_TEST_ACCESS_KEY_ID = "YOUR_ACCESS_KEY_ID_HERE";
 const AWS_TEST_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE";
@@ -39,7 +38,6 @@ class AgentTestCase extends ImpTestCase {
             "QueueUrl": AWS_TEST_SQS_URL,
             "MessageBody": AWS_TEST_MESSAGE
         }
-
         return Promise(function(resolve, reject) {
 
             _sqs.SendMessage(sendParams, function(res) {
@@ -121,7 +119,6 @@ class AgentTestCase extends ImpTestCase {
         local receiveParams = {
             "QueueUrl": AWS_TEST_SQS_URL
         }
-
         return Promise(function(resolve, reject) {
 
             _sqs.ReceiveMessage(receiveParams, function(res) {
@@ -175,7 +172,7 @@ class AgentTestCase extends ImpTestCase {
     // test a successful batch transmission. Validate against the http response
     function testSendBatchMessages() {
 
-		// parameters for sending multiple messages
+        // parameters for sending multiple messages
         local messageBatchParams = {
             "QueueUrl": AWS_TEST_SQS_URL,
             "SendMessageBatchRequestEntry.1.Id": "m1",
@@ -246,7 +243,7 @@ class AgentTestCase extends ImpTestCase {
             local receipt = messageBody.slice((start + 15), (finish - 1));
             return receipt;
         }
-
+        
         // reception parameters to recieve messages
         local receiveParams = {
             "QueueUrl": AWS_TEST_SQS_URL
