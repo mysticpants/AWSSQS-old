@@ -16,7 +16,7 @@ As the sample code includes the private key verbatim in the source, it should be
 
 ## Configure the API keys for SQS
 
-At the top of the agent.test. nut there are four constants that need to be configured.
+At the top of the agent.test.nut there are four constants that need to be configured.
 
 Parameter                   | Description
 --------------------------- | -----------
