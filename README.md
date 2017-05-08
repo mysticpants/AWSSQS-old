@@ -246,6 +246,26 @@ sqs.SendMessageBatch (messageBatchParams, function(res) {
 
 ```
 
+#### Response Table
+The format of the response table general to all functions
+
+Key		              |       Type     | Description
+--------------------- | -------------- | -----------
+body				  | String         | AWS SQS response in a function specific structure that is json encoded.
+statuscode			  | Integer		   | http status code
+headers				  | Table		   | see headers
+
+where `headers` includes
+
+Key		              |       Type     | Description
+--------------------- | -------------- | -----------
+x-amzn-requestid	  | String		   | Amazon request id
+content-type		  | String		   | Content type e.g text/XML
+date 				  | String		   | The date and time at which response was sent
+content-length		  | String		   | the length of the content
+x-amz-crc32			  | String		   | Checksum of the UTF-8 encoded bytes in the HTTP response
+
+
 # License
 
 The AWSSQS library is licensed under the [MIT License](LICENSE).
