@@ -30,7 +30,7 @@ class AgentTestCase extends ImpTestCase {
     }
 
 
-    // testing successfully sending a message. Check against http ok response
+    // testing successfully sending a message. Checks against http ok response
     function testSendMessage() {
 
         // message params
@@ -41,6 +41,7 @@ class AgentTestCase extends ImpTestCase {
         return Promise(function(resolve, reject) {
 
             _sqs.SendMessage(sendParams, function(res) {
+
                 try {
                     this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
                     resolve();
@@ -183,6 +184,7 @@ class AgentTestCase extends ImpTestCase {
         return Promise(function(resolve, reject) {
 
             _sqs.SendMessageBatch(messageBatchParams, function(res) {
+
                 try {
                     this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
                     resolve();
@@ -238,6 +240,7 @@ class AgentTestCase extends ImpTestCase {
 
         // finds the receipt handle string in the body string.
         local receiptFinder = function(messageBody) {
+			
             local start = messageBody.find("<ReceiptHandle>");
             local finish = messageBody.find("/ReceiptHandle>");
             local receipt = messageBody.slice((start + 15), (finish - 1));
