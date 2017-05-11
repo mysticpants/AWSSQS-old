@@ -6,7 +6,7 @@ To add this library to your model, add the following lines to the top of your ag
 
 ```
 #require "AWSRequestV4.class.nut:1.0.2"
-#require "AWSSQS.class.nut:1.0.0"
+#require "AWSSQS.lib.nut:1.0.0"
 ```
 
 **Note: [AWSRequestV4](https://github.com/electricimp/AWSRequestV4/) must be loaded.**
@@ -109,7 +109,7 @@ local deleteParams = {
 
 _sqs.DeleteMessageBatch(deleteParams, function(res) {
     server.log(res.statuscode);
-}
+});
 
 ```
 
@@ -148,12 +148,13 @@ local receiptFinder = function(messageBody) {
 }
 
 // Receive Message
-receiveParams <- {
+local receiveParams = {
     "QueueUrl": "AWS_SQS_URL"
 }
 sqs.ReceiveMessage(receiveParams, function(res) {
-    server.log(res.statuscode);
-    server.log(receiptFinder(res.body));
+    if (res.statuscode >= 200 && res.statuscode < 300) {
+        server.log(receiptFinder(res.body));
+    }
 });
 
 ```

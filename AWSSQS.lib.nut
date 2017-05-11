@@ -32,9 +32,9 @@ class AWSSQS {
     _awsRequest = null;
 
     //--------------------------------------------------------------------------
-     // @param {string} region
-     // @param {string} accessKeyId
-     // @param {string} secretAccessKey
+    // @param {string} region
+    // @param {string} accessKeyId
+    // @param {string} secretAccessKey
     //--------------------------------------------------------------------------
     constructor(region, accessKeyId, secretAccessKey) {
         if ("AWSRequestV4" in getroottable()) {
@@ -45,8 +45,8 @@ class AWSSQS {
     }
 
     //--------------------------------------------------------------------------
-     // @param {table} params
-     // @param {function} cb
+    // @param {table} params
+    // @param {function} cb
     //--------------------------------------------------------------------------
     function DeleteMessage(params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
@@ -64,8 +64,8 @@ class AWSSQS {
     }
 
     //--------------------------------------------------------------------------
-     // @param {table} params
-     // @param {function} cb
+    // @param {table} params
+    // @param {function} cb
     //--------------------------------------------------------------------------
     function DeleteMessageBatch(params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
@@ -83,8 +83,8 @@ class AWSSQS {
     }
 
     //--------------------------------------------------------------------------
-     // @param {table} params
-     // @param {function} cb
+    // @param {table} params
+    // @param {function} cb
     //--------------------------------------------------------------------------
     function ReceiveMessage(params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
@@ -102,8 +102,8 @@ class AWSSQS {
     }
 
     //--------------------------------------------------------------------------
-     // @param {table} params
-     // @param {function} cb
+    // @param {table} params
+    // @param {function} cb
     //--------------------------------------------------------------------------
     function SendMessage(params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
@@ -121,8 +121,8 @@ class AWSSQS {
     }
 
     //--------------------------------------------------------------------------
-     // @param {table} params
-     // @param {function} cb
+    // @param {table} params
+    // @param {function} cb
  	//--------------------------------------------------------------------------
     function SendMessageBatch(params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
