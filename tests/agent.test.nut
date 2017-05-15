@@ -87,20 +87,31 @@ class AgentTestCase extends ImpTestCase {
     function testReceiveMessage() {
 
         local receiveParams = {
-            "QueueUrl": AWS_TEST_SQS_URL
+                "QueueUrl": AWS_TEST_SQS_URL
+            }
+            // message params
+        local sendParams = {
+            "QueueUrl": AWS_TEST_SQS_URL,
+            "MessageBody": AWS_TEST_MESSAGE
         }
+
         return Promise(function(resolve, reject) {
 
-            _sqs.ReceiveMessage(receiveParams, function(res) {
-                try {
-                    this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
-                    resolve();
-                } catch (e) {
-                    reject(e);
-                }
+            _sqs.SendMessage(sendParams, function(res) {
+
+                _sqs.ReceiveMessage(receiveParams, function(res) {
+                    try {
+                        this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
+                        resolve();
+                    } catch (e) {
+                        reject(e);
+                    }
+
+                }.bindenv(this));
 
             }.bindenv(this));
         }.bindenv(this));
+
     }
 
 
@@ -120,27 +131,38 @@ class AgentTestCase extends ImpTestCase {
         local receiveParams = {
             "QueueUrl": AWS_TEST_SQS_URL
         }
+
+        // message params
+        local sendParams = {
+            "QueueUrl": AWS_TEST_SQS_URL,
+            "MessageBody": AWS_TEST_MESSAGE
+        }
         return Promise(function(resolve, reject) {
 
-            _sqs.ReceiveMessage(receiveParams, function(res) {
+            _sqs.SendMessage(sendParams, function(res) {
 
-                local receipt = receiptFinder(res.body);
-                local deleteParams = {
-                    "QueueUrl": AWS_TEST_SQS_URL,
-                    "ReceiptHandle": receipt
-                }
-                _sqs.DeleteMessage(deleteParams, function(res) {
+                _sqs.ReceiveMessage(receiveParams, function(res) {
 
-                    try {
-                        this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
-                        resolve();
-                    } catch (e) {
-                        reject(e);
+                    local receipt = receiptFinder(res.body);
+                    local deleteParams = {
+                        "QueueUrl": AWS_TEST_SQS_URL,
+                        "ReceiptHandle": receipt
                     }
+                    _sqs.DeleteMessage(deleteParams, function(res) {
 
+                        try {
+                            this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
+                            resolve();
+                        } catch (e) {
+                            reject(e);
+                        }
+
+                    }.bindenv(this));
                 }.bindenv(this));
+
             }.bindenv(this));
         }.bindenv(this));
+
 
     }
 
@@ -240,7 +262,7 @@ class AgentTestCase extends ImpTestCase {
 
         // finds the receipt handle string in the body string.
         local receiptFinder = function(messageBody) {
-			
+
             local start = messageBody.find("<ReceiptHandle>");
             local finish = messageBody.find("/ReceiptHandle>");
             local receipt = messageBody.slice((start + 15), (finish - 1));
