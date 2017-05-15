@@ -4,6 +4,7 @@ const AWS_TEST_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE";
 const AWS_TEST_REGION = "YOUR_REGION_HERE";
 const AWS_TEST_SQS_URL = "YOUR_SQS_URL_HERE";
 
+
 const AWS_TEST_MESSAGE = "testMessage";
 
 // invalid information used to check tests
@@ -83,7 +84,9 @@ class AgentTestCase extends ImpTestCase {
 
 
 
+    // first send a message to be received
     // test successfully receiving a message. Checking against a successful http response.
+    // checks that the message text is in the response packet
     function testReceiveMessage() {
 
         local receiveParams = {
@@ -99,15 +102,21 @@ class AgentTestCase extends ImpTestCase {
 
             _sqs.SendMessage(sendParams, function(res) {
 
-                _sqs.ReceiveMessage(receiveParams, function(res) {
-                    try {
-                        this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
-                        resolve();
-                    } catch (e) {
-                        reject(e);
-                    }
+                imp.wakeup(2, function() {
 
-                }.bindenv(this));
+                    _sqs.ReceiveMessage(receiveParams, function(res) {
+                        try {
+                            this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
+                            this.assertTrue(res.body.find(AWS_TEST_MESSAGE) != null);
+                            resolve();
+                        } catch (e) {
+                            reject(e);
+                        }
+
+                    }.bindenv(this));
+
+                }.bindenv(this))
+
 
             }.bindenv(this));
         }.bindenv(this));
@@ -117,7 +126,9 @@ class AgentTestCase extends ImpTestCase {
 
 
     // test successfully deleting a message
+    // send a message that we will delete
     // first need to receive a message to get ReceiptHandle then you can delete it
+    // check that the receipt no longer listed
     function testDeleteMessage() {
 
         // finds the receipt handle string in the body string.
@@ -152,7 +163,21 @@ class AgentTestCase extends ImpTestCase {
 
                         try {
                             this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
-                            resolve();
+                            imp.wakeup(2, function() {
+
+                                _sqs.ReceiveMessage(receiveParams, function(res) {
+                                    try {
+                                        this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
+                                        this.assertTrue(res.body.find(receipt) == null);
+                                        resolve();
+                                    } catch (e) {
+                                        reject(e);
+                                    }
+
+                                }.bindenv(this));
+
+                            }.bindenv(this))
+
                         } catch (e) {
                             reject(e);
                         }
@@ -361,5 +386,6 @@ class AgentTestCase extends ImpTestCase {
 
 
     }
+
 
 }
