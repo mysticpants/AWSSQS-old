@@ -3,4 +3,7 @@
 *.out
 .build_api_key.json
 *.swp
-test*
+utilities.nut
+.imptest
+*.out.nut
+AWSRequestV4.class.nut
