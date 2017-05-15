@@ -24,7 +24,7 @@
 
 class AWSSQS {
 
-    static version = [1, 0, 0];
+    static VERSION = "1.0.0";
 
     static SERVICE = "sqs";
     static TARGET_PREFIX = "SQS_20121105";
