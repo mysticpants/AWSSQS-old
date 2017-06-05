@@ -43,6 +43,7 @@ sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 Deletes the specified message from the specified queue. You specify the message by using the message's receipt handle and not the MessageId you receive when you send the message.
 [here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessage.html)
 
+
  Parameter            |       Type     | Description
 ----------------------| -------------- | -----------
 **params**            | table          | Table of parameters (See API Reference)
@@ -95,6 +96,7 @@ Id            | String  | Yes      | An identifier for this particular receipt h
 ReceiptHandle | String  | Yes      | The receipt handle associated with the message to delete
 
 #### Example
+
 Please refer to the ReceiveMessage [example](#ida) for how to obtain RECEIPT_HANDLE.
 Please refer to the SendMessageBatch [example](#idb) for where the batch of messages were placed
 
@@ -110,8 +112,6 @@ _sqs.DeleteMessageBatch(deleteParams, function(res) {
 });
 
 ```
-
-
 
 ### ReceiveMessage(params, cb)
 Retrieves one or more messages (up to 10), from the specified queue.
@@ -158,7 +158,6 @@ sqs.ReceiveMessage(receiveParams, function(res) {
 ```
 
 
-
 ### SendMessage(params, cb)
 Delivers a message to the specified queue.
 [here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html)
@@ -200,6 +199,7 @@ sqs.SendMessage(sendParams, function(res) {
 ### SendMessageBatch(params, cb)
 Delivers up to ten messages to the specified queue.
 [here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html)
+
 
  Parameter             | Type           | Description
 ---------------------- | -------------- | -----------

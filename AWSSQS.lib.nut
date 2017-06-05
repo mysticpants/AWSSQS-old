@@ -63,12 +63,14 @@ class AWSSQS {
         _awsRequest.post("/", headers, http.urlencode(body), cb);
     }
 
+
     //	Deletes up to ten messages from the specified queue
     //
     // 	Parameters:
     //    params				table of parameters to be sent as part of the request
     //    cb                    callback function to be called when response received
     //						from aws
+
     function DeleteMessageBatch(params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
 
@@ -83,6 +85,7 @@ class AWSSQS {
 
         _awsRequest.post("/", headers, http.urlencode(body), cb);
     }
+
 
     //	Retrieves one or more messages (up to 10), from the specified queue
     //
@@ -104,6 +107,7 @@ class AWSSQS {
 
         _awsRequest.post("/", headers, http.urlencode(body), cb);
     }
+
 
     //	Delivers a message to the specified queue
     //
@@ -132,6 +136,7 @@ class AWSSQS {
     //    params				table of parameters to be sent as part of the request
     //    cb                    callback function to be called when response received
     //						from aws
+
     function SendMessageBatch(params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
 

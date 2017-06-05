@@ -14,6 +14,7 @@ As the sample code includes the private key verbatim in the source, it should be
 1. Click "Quick-Create Queue"
 1. Note the URL of the SQS queue you are using.
 
+
 ## Setting up AIM Policy
 
 1. Select `Services` link (on the top left of the page) and them type `IAM` in the search line
@@ -46,7 +47,7 @@ As the sample code includes the private key verbatim in the source, it should be
 1. Press `Create user`
 1. Copy down your `Access key ID` and `Secret access key`
 
-## Configure the API keys for SQS
+API keys for SQS
 
 At the top of the sample.agent.nut there are three constants that need to be configured.
 
