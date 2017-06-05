@@ -56,12 +56,11 @@ QueueUrl     | String  | Yes     | The URL of the Amazon SQS queue from which me
 ReceiptHandle| String  | Yes     | The receipt handle associated with the message to delete
 
 #### Example
-
+please refer to the ReceiveMessage [example](#ida) for how to obtain RECEIPT_HANDLE
 ```squirrel
-// RECEIPT_HANDLE can be found from the response.body in ReceiveMessage
 deleteParams <- {
     "QueueUrl": "AWS_SQS_URL"
-	"ReceiptHandle": "RECEIPT_HANDLE"
+    "ReceiptHandle": "RECEIPT_HANDLE"
 }
 sqs.DeleteMessage(deleteParams, function(res) {
     server.log(res.statuscode);
@@ -96,11 +95,10 @@ Id            | String  | Yes      | An identifier for this particular receipt h
 ReceiptHandle | String  | Yes      | The receipt handle associated with the message to delete
 
 #### Example
+Please refer to the ReceiveMessage [example](#ida) for how to obtain RECEIPT_HANDLE.
+Please refer to the SendMessageBatch [example](#idb) for where the batch of messages were placed
 
 ```squirrel
-// delete the message corresponding to id "m1"
-// see ReceiveMessage for receipt
-
 local deleteParams = {
     "QueueUrl": "AWS_SQS_URL",
     "DeleteMessageBatchRequestEntry.1.Id": "m1"
@@ -137,7 +135,7 @@ VisibilityTimeout       | Integer  			| No       | null     | The duration (in s
 WaitTimeSeconds         | Integer  			| No       | null     | The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds
 
 #### Example
-
+<a id="ida"></a>
 ```squirrel
 local receiptFinder = function(messageBody) {
 
@@ -186,7 +184,6 @@ MessageGroupId        	 | String    				   | No       | null    | This parameter
 #### Example
 
 ```squirrel
-// Send Message
 sendParams <- {
     "QueueUrl": "AWS_SQS_URL",
     "MessageBody": "testMessage"
@@ -231,6 +228,7 @@ MessageDeduplicationId   | String    				   | No         | null    | This parame
 MessageGroupId           | String    				   | No         | null    | This parameter applies only to FIFO (first-in-first-out) queues.The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order)
 
 #### Example
+<a id="idb"></a>
 
 ```squirrel
 local messageBatchParams = {
